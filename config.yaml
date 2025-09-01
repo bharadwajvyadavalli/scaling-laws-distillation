@@ -1,0 +1,43 @@
+# Distillation Configuration
+
+# Models
+teacher_model: "bert-base-uncased"  # HuggingFace model name
+student_model: "distilbert-base-uncased"  # or use 'tiny' for custom
+student_type: "tiny"  # 'tiny' for custom, 'huggingface' for pretrained
+
+# Student architecture (for tiny models)
+student_hidden_size: 256
+student_layers: 4
+student_heads: 4
+
+# Training
+epochs: 10
+batch_size: 32
+learning_rate: 0.0001
+temperature: 4.0  # Distillation temperature
+
+# Data
+data_percent: 10  # Percentage of WikiText to use (for quick experiments)
+max_length: 128  # Max sequence length
+
+# Experiment tracking
+experiment_name: "scaling_law_v1"
+save_dir: "./checkpoints"
+
+# Scaling experiments - different model sizes to test
+model_variants:
+  tiny:
+    hidden_size: 128
+    num_layers: 2
+  small:
+    hidden_size: 256
+    num_layers: 4
+  medium:
+    hidden_size: 512
+    num_layers: 6
+  base:
+    hidden_size: 768
+    num_layers: 12
+
+# Data scaling experiments - different data sizes
+data_sizes: [1, 5, 10, 25, 50, 100]  # Percentages of dataset
